@@ -1,0 +1,15 @@
+[submodule "dm-log"]
+	path = dm-log
+	url = git@github.com:Dinahmoe/dm-log.git
+[submodule "dm-audiomidi"]
+	path = dm-audiomidi
+	url = git@github.com:Dinahmoe/dm-audiomidi.git
+[submodule "dm-audioengine"]
+	path = dm-audioengine
+	url = git@github.com:Dinahmoe/dm-audioengine.git
+[submodule "dm-utils"]
+	path = dm-utils
+	url = git@github.com:Dinahmoe/dm-utils.git
+[submodule "dm-dsp"]
+	path = dm-dsp
+	url = git@github.com:Dinahmoe/dm-dsp.git
