@@ -28,24 +28,24 @@ These repos, that can be used independently, are:
 
 ## Download
 After having cloned this repository, and cd’ed into the repo’s directory, update the submodules, issuing
->> git submodule update
->> git submodule foreach "(git checkout master; git pull)&"
+*git submodule update*
+*git submodule foreach "(git checkout master; git pull)&"*
 This will download the dependencies mentioned above.
 
 ## Building
 You must have cmake installed. From the main directory, you can issue the following commands in the terminal
->> mkdir build && cd build && cmake .. && make
+*mkdir build && cd build && cmake .. && make*
 This will compile and build the static library, merging all the other libraries into one.
->> make install 
+*make install*
 will install the library
 
 ## Examples
 The examples directory contains a few examples of using the library with Openframeworks, JUCE, PortAudio, and libsndfile for offline bounce.
 
-Extras
+## Extras
 The directory “Extras” contains instruments and effects built using the basic “vanilla” building blocks provided by the audio engine. It can be compared to the objects contained in the “Extended” version of pure data.
 
-The API
+## The API
 The interface to the librarier resembles the one of the WebAudio API.
 The AudioContext is the main class on which the user operates on: it holds the current status of the node graph, 
 
