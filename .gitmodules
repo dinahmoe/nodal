@@ -13,3 +13,6 @@
 [submodule "dm-dsp"]
 	path = dm-dsp
 	url = git@github.com:Dinahmoe/dm-dsp.git
+[submodule "dm-cmake"]
+	path = dm-cmake
+	url = git@github.com:dinahmoe/dm-cmake.git
