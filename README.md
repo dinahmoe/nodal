@@ -28,9 +28,9 @@ These repos, that can be used independently, are:
 ## Download
 After having cloned this repository, and cd’ed into the repo’s directory, update the submodules, issuing
 
-*git submodule update*
+*git submodule init*
 
-*git submodule foreach "(git checkout master; git pull)&"*
+*git submodule update*
 
 This will download the dependencies mentioned above.
 
