@@ -1,5 +1,4 @@
 # nodal - C++ Audio Unit Generator library
-
 NODAL is a Unit Generator audio framework. It has been developed at Dinahmoe in 2012 to 
 realize native applications using the interface of the Web Audio API (Javascript), that 
 felt comfortable and had already been used in the other company’s projects.
@@ -28,15 +27,22 @@ These repos, that can be used independently, are:
 
 ## Download
 After having cloned this repository, and cd’ed into the repo’s directory, update the submodules, issuing
+
 *git submodule update*
+
 *git submodule foreach "(git checkout master; git pull)&"*
+
 This will download the dependencies mentioned above.
 
 ## Building
 You must have cmake installed. From the main directory, you can issue the following commands in the terminal
+
 *mkdir build && cd build && cmake .. && make*
+
 This will compile and build the static library, merging all the other libraries into one.
+
 *make install*
+
 will install the library
 
 ## Examples
