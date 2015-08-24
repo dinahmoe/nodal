@@ -37,13 +37,14 @@ This will download the dependencies mentioned above.
 ## Building
 You must have cmake installed. From the main directory, you can issue the following commands in the terminal
 
-*mkdir build && cd build && cmake .. && make*
+*mkdir build && cd build*
 
-This will compile and build the static library, merging all the other libraries into one.
+*cmake -DNODAL_INSTALL_PATH=../nodalCompiled ..*
 
 *make install*
 
-will install the library
+This will compile and build the static library, merging all the single libraries into one,
+libnodal.a. The library and the headers will be found at the install path.
 
 ## Examples
 The examples directory contains a few examples of using the library with Openframeworks, JUCE, PortAudio, and libsndfile for offline bounce.
