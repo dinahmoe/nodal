@@ -80,7 +80,6 @@
 		0681F2AE5C7542BA8110BF3E /* ControlTimeline.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ControlTimeline.cpp; path = "dm-audioengine/src/ControlTimeline.cpp"; sourceTree = SOURCE_ROOT; };
 		0796C377BC0E4968AF5634FB /* BiquadFilter.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = BiquadFilter.hpp; path = "dm-dsp/include/BiquadFilter.hpp"; sourceTree = SOURCE_ROOT; };
 		0EBA8BFF52C24A8FAF27D46A /* CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; lastKnownFileType = text; name = CMakeLists.txt; path = "dm-dsp/CMakeLists.txt"; sourceTree = SOURCE_ROOT; };
-		11ABC85226B84058A4F95857 /* CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
 		14B5C027699E4359B57CEC40 /* AudioFileReader.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = AudioFileReader.hpp; path = "dm-audioengine/src/AudioFileReader.hpp"; sourceTree = SOURCE_ROOT; };
 		14E37F1383D34492B22293EC /* OscillatorNode.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = OscillatorNode.cpp; path = "dm-audioengine/src/OscillatorNode.cpp"; sourceTree = SOURCE_ROOT; };
 		17C22E081E1F422BB439E415 /* SummingNode.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = SummingNode.cpp; path = "dm-audioengine/src/SummingNode.cpp"; sourceTree = SOURCE_ROOT; };
@@ -138,7 +137,6 @@
 		B1FA8C080D8D42639E9FCBDF /* MutexDefines.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = MutexDefines.hpp; path = "dm-utils/include/MutexDefines.hpp"; sourceTree = SOURCE_ROOT; };
 		B20AB29F4724416094B75034 /* BiquadFilterNode.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = BiquadFilterNode.cpp; path = "dm-audioengine/src/BiquadFilterNode.cpp"; sourceTree = SOURCE_ROOT; };
 		B351C7CE44EC4E45BE6AF140 /* Oscillator.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = Oscillator.cpp; path = "dm-dsp/src/Oscillator.cpp"; sourceTree = SOURCE_ROOT; };
-		B63CECBEB9C241FC98AFE404 /* CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
 		BB8C61DFA53A4C3CAB794A6F /* BicubicInterpolator.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = BicubicInterpolator.hpp; path = "dm-dsp/include/BicubicInterpolator.hpp"; sourceTree = SOURCE_ROOT; };
 		BC629CAFDD514E52B2D53721 /* AudioNodeInput.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = AudioNodeInput.cpp; path = "dm-audioengine/src/AudioNodeInput.cpp"; sourceTree = SOURCE_ROOT; };
 		BD6C76CA2AA246569F97E820 /* ControlTimeline.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = ControlTimeline.hpp; path = "dm-audioengine/src/ControlTimeline.hpp"; sourceTree = SOURCE_ROOT; };
@@ -171,22 +169,6 @@
 				965A1D213A1842F8A1A71214 /* LogMac.mm */,
 			);
 			name = "Source Files";
-			sourceTree = "<group>";
-		};
-		13EC5A2ED37148B7BAC9265E /* ZERO_CHECK */ = {
-			isa = PBXGroup;
-			children = (
-				6713DF07BD8C4513BAD49C35 /* CMake Rules */,
-				B63CECBEB9C241FC98AFE404 /* CMakeLists.txt */,
-			);
-			name = ZERO_CHECK;
-			sourceTree = "<group>";
-		};
-		281E9042B45D4AB6B8C47BC0 /* CMake Rules */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "CMake Rules";
 			sourceTree = "<group>";
 		};
 		2FE9778E25CA44558F30F70E /* Header Files */ = {
@@ -259,13 +241,6 @@
 				F0A4C5C646B04B03A7BF241F /* CMakeLists.txt */,
 			);
 			name = "dm-audiomidi";
-			sourceTree = "<group>";
-		};
-		6713DF07BD8C4513BAD49C35 /* CMake Rules */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "CMake Rules";
 			sourceTree = "<group>";
 		};
 		872AD31C41234619B22201BB /* Header Files */ = {
@@ -346,15 +321,6 @@
 			name = "Source Files";
 			sourceTree = "<group>";
 		};
-		B569629ACD374F4F87A05459 /* ALL_BUILD */ = {
-			isa = PBXGroup;
-			children = (
-				281E9042B45D4AB6B8C47BC0 /* CMake Rules */,
-				11ABC85226B84058A4F95857 /* CMakeLists.txt */,
-			);
-			name = ALL_BUILD;
-			sourceTree = "<group>";
-		};
 		CD8582FFDD9C4A3C8FCD4521 /* Source Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -376,8 +342,6 @@
 			isa = PBXGroup;
 			children = (
 				A314840100894C9CAA0F253A /* nodal */,
-				B569629ACD374F4F87A05459 /* ALL_BUILD */,
-				13EC5A2ED37148B7BAC9265E /* ZERO_CHECK */,
 				FE6CCE513C1F4932AD0BEB71 /* dm-audioengine */,
 				63B40D81B4044AA78E65A9A8 /* dm-audiomidi */,
 				988A006780114286A07E2B14 /* dm-dsp */,
