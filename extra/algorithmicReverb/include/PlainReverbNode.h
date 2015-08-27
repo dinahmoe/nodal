@@ -16,18 +16,19 @@
 
 using namespace dinahmoe;
 using namespace audioengine;
-    
-  class PlainReverbNode{
-    public:
-      PlainReverbNode(AudioContext* context,float delay,float gain);
-      ~PlainReverbNode();
 
-      RefCounted<AudioGainNode> m_input;
-      RefCounted<AudioGainNode> m_output;
-    private:
-      RefCounted<AudioGainNode> m_gain;
-      RefCounted<DelayNode> m_delay;
-      RefCounted<SummingNode> m_sum;
-    };
+class PlainReverbNode{
+public:
+  PlainReverbNode(AudioContext* context,float delay,float gain);
+  ~PlainReverbNode();
+
+  RefCounted<AudioGainNode> m_input;
+  RefCounted<AudioGainNode> m_output;
+private:
+  AudioContext* m_context;
+  RefCounted<AudioGainNode> m_gain;
+  RefCounted<DelayNode> m_delay;
+  RefCounted<SummingNode> m_sum;
+};
 
 #endif /* defined(__Nodal__PlainReverbNode__) */

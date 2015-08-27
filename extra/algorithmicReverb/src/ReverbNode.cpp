@@ -1,6 +1,5 @@
 //
 //  ReverbNode.cpp
-//  Dmaf OSC Utilities
 //
 //  Created by Thoren Horstmann on 26.08.15.
 //
@@ -12,53 +11,41 @@
 
 
 ReverbNode::ReverbNode(AudioContext* context){
-
-  m_sum = context->createSummingNode();
-  m_gains = new RefCounted<AudioGainNode>[4];
-  m_plain = new PlainReverbNode*[4];
-  m_allPass = new AllpassNode*[2];
-
-  
-  m_gains[0] = context->createGainNode(0.9);
-  m_gains[1] = context->createGainNode(0.8);
-  m_gains[2] = context->createGainNode(0.7);
-  m_gains[3] = context->createGainNode(0.6);
-
-  float samplerate = context->getSampleRate();
-  m_plain[0] = new PlainReverbNode(context,0.02,0.65);
-  m_plain[1] = new PlainReverbNode(context,0.03,0.65);
-  m_plain[2] = new PlainReverbNode(context,0.04,0.65);
-  m_plain[3] = new PlainReverbNode(context,0.05,0.65);
-
-  m_allPass[0] = new AllpassNode(context,0.02,0.65);
-  m_allPass[1] = new AllpassNode(context,0.03,0.65);
+  static const float initialValuesPlain[3][NR_PLAIN] {
+    {0.1,0.2,0.3,0.4},  //init m_gains
+    {0.1,0.2,0.3,0.1}, //init m_plain delay
+    {0.1,0.2,0.3,0.4} //init m_plain gain
+  };
+  static const float initialValuesAllpass[2][NR_ALLPASS] {
+    {0.5,0.5}, //init m_allpass delay
+    {0.7,0.7} //init m_allpass gain
+  };
   
   m_input = context->createGainNode();
   m_output = context->createGainNode();
+  m_sum = context->createSummingNode();
   
-  m_input->connect(m_plain[0]->m_input.get());
-  m_input->connect(m_plain[1]->m_input.get());
-  m_input->connect(m_plain[2]->m_input.get());
-  m_input->connect(m_plain[3]->m_input.get());
-
-  m_plain[0]->m_output.get()->connect(m_gains[0].get());
-  m_plain[1]->m_output.get()->connect(m_gains[1].get());
-  m_plain[2]->m_output.get()->connect(m_gains[2].get());
-  m_plain[3]->m_output.get()->connect(m_gains[3].get());
-
-  m_gains[0]->connect(m_sum.get());
-  m_gains[1]->connect(m_sum.get());
-  m_gains[2]->connect(m_sum.get());
-  m_gains[3]->connect(m_sum.get());
+  for(int i = 0; i < NR_PLAIN;++i){
+    m_gains[i] = context->createGainNode(initialValuesPlain[0][i]);
+    m_plain[i] = new PlainReverbNode(context,initialValuesPlain[1][i],initialValuesPlain[2][i]);
+    
+    m_input->connect(m_plain[i]->m_input.get());
+    m_plain[i]->m_output.get()->connect(m_gains[i].get());
+    m_gains[i]->connect(m_sum.get());
+  }
+  
+  for (int i = 0; i < NR_ALLPASS; ++i) {
+    m_allPass[i] = new AllpassNode(context,initialValuesAllpass[0][i],initialValuesAllpass[1][i]);
+    m_filter[i] = context->createBiquadFilterNode(DspBasics::BiquadFilterType::ALLPASS, 1, 3, 1.0F);
+  }
 
   m_sum->connect(m_allPass[0]->m_input.get());
   m_allPass[0]->m_output.get()->connect(m_allPass[1]->m_input.get());
   m_allPass[1]->m_output.get()->connect(m_output.get());
-  
+  /*m_sum->connect(m_filter[0].get());
+  m_filter[0].get()->connect(m_filter[1].get());
+  m_filter[1].get()->connect(m_output.get());*/
 }
 
-ReverbNode::~ReverbNode(){
-  delete [] m_allPass;
-  delete [] m_plain;
-}
+ReverbNode::~ReverbNode(){}
 

@@ -304,6 +304,7 @@
 		A314840100894C9CAA0F253A /* nodal */ = {
 			isa = PBXGroup;
 			children = (
+				F69F31B6BF86436BB5626844 /* Source Files */,
 				9CAEAB4E273E446591272AD6 /* Source Files */,
 				88CFAC3B81A04600B50C8878 /* CMakeLists.txt */,
 			);
@@ -379,7 +380,6 @@
 		FE6CCE513C1F4932AD0BEB71 /* dm-audioengine */ = {
 			isa = PBXGroup;
 			children = (
-				F69F31B6BF86436BB5626844 /* Source Files */,
 				872AD31C41234619B22201BB /* Header Files */,
 				4AB8EAD39F8E4780932EB6F8 /* CMakeLists.txt */,
 			);

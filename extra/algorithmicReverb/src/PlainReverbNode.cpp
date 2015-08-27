@@ -11,7 +11,7 @@
 #include "AudioNodeInput.hpp"
 
 
-PlainReverbNode::PlainReverbNode(AudioContext* context,float delay,float gain){
+PlainReverbNode::PlainReverbNode(AudioContext* context,float delay,float gain) : m_context(context){
 
   m_sum = context->createSummingNode();
   m_gain = context->createGainNode(gain);
