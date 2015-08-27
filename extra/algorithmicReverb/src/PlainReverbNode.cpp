@@ -6,20 +6,24 @@
 //
 //
 
-#include "PlainReverbNode.h"
-#include "AudioBufferSourceNode.hpp"
-#include "AudioNodeInput.hpp"
+/*
+ input -> sum ------------> output
+           ^           |
+           |           v
+          gain(g) <- delay(d)
+ */
 
+#include "PlainReverbNode.h"
 
 PlainReverbNode::PlainReverbNode(AudioContext* context,float delay,float gain) : m_context(context){
-
+  //create the nodes
   m_sum = context->createGainNode();
   m_gain = context->createGainNode(gain);
   m_delay = context->createDelayNode(delay);
-  
   m_input = context->createGainNode();
   m_output = context->createGainNode();
 
+  //connect the nodes
   m_input->connect(m_sum.get());
   m_sum->connect(m_delay.get());
   m_delay->connect(m_gain.get());

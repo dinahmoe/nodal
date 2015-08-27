@@ -8,7 +8,6 @@
 #ifndef __ReverbNode__
 #define __ReverbNode__
 
-#include "AudioNode.hpp"
 #include "PlainReverbNode.h"
 #include "AllpassNode.h"
 #include "AudioContext.hpp"
@@ -21,7 +20,7 @@
 using namespace dinahmoe;
 using namespace audioengine;
 
-
+//a basic Schroeder's reverb
 class ReverbNode{
 public:
   ReverbNode(AudioContext* context);
@@ -33,7 +32,6 @@ private:
   AudioContext* m_context;
   std::array<PlainReverbNode*,NR_PLAIN> m_plain;
   std::array<AllpassNode*,NR_ALLPASS> m_allPass;
-  std::array<RefCounted<BiquadFilterNode>,NR_ALLPASS> m_filter;
   std::array<RefCounted<AudioGainNode>,NR_PLAIN> m_gains;
   RefCounted<AudioGainNode> m_sum;
 };
