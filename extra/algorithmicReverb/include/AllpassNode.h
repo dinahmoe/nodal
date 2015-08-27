@@ -29,7 +29,7 @@ private:
   AudioContext* m_context;
   std::array<RefCounted<AudioGainNode>,2> m_gains;
   RefCounted<DelayNode> m_delay;
-  std::array<RefCounted<SummingNode>,2> m_sums;
+  std::array<RefCounted<AudioGainNode>,2> m_sums;
 };
 
 #endif /* defined(__Nodal__AllpassNode__) */

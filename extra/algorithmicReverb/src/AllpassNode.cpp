@@ -17,8 +17,8 @@ AllpassNode::AllpassNode(AudioContext* context,float delay,float gain){
   m_input =context->createGainNode();
   m_output =context->createGainNode();
   
-  m_sums[0] = context->createSummingNode();
-  m_sums[1] = context->createSummingNode();
+  m_sums[0] = context->createGainNode();
+  m_sums[1] = context->createGainNode();
 
   m_gains[0] = context->createGainNode(gain);
   m_gains[1] = context->createGainNode(-gain);

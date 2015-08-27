@@ -35,7 +35,7 @@ private:
   std::array<AllpassNode*,NR_ALLPASS> m_allPass;
   std::array<RefCounted<BiquadFilterNode>,NR_ALLPASS> m_filter;
   std::array<RefCounted<AudioGainNode>,NR_PLAIN> m_gains;
-  RefCounted<SummingNode> m_sum;
+  RefCounted<AudioGainNode> m_sum;
 };
 
 #endif /* defined(__ReverbNode__) */

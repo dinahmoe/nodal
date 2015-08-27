@@ -28,7 +28,7 @@ private:
   AudioContext* m_context;
   RefCounted<AudioGainNode> m_gain;
   RefCounted<DelayNode> m_delay;
-  RefCounted<SummingNode> m_sum;
+  RefCounted<AudioGainNode> m_sum;
 };
 
 #endif /* defined(__Nodal__PlainReverbNode__) */

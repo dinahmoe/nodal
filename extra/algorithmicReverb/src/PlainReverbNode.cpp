@@ -13,7 +13,7 @@
 
 PlainReverbNode::PlainReverbNode(AudioContext* context,float delay,float gain) : m_context(context){
 
-  m_sum = context->createSummingNode();
+  m_sum = context->createGainNode();
   m_gain = context->createGainNode(gain);
   m_delay = context->createDelayNode(delay);
   
