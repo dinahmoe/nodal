@@ -16,11 +16,12 @@ void ofApp::setup(){
   
   // start audio
   ofSoundStreamSetup(2, 0, this, SAMPLING_RATE, BUFFER_SIZE, 4);
-  ofSoundStreamStart();
+  //ofSoundStreamStart();
   
   // create a buffer from file. Note that this throws std::runtime_error
   // in case of errors
   mSynth.mNoteBuffer = mAudioContext->createInMemoryBuffer(ofToDataPath("sounds/SynthNote.aif"));
+  mSynth.rvb = new ReverbNode(mAudioContext);
 }
 
 //--------------------------------------------------------------

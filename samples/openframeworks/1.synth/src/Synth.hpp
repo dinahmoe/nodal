@@ -9,6 +9,8 @@
 #define _Synth_hpp
 
 #include "AudioContext.hpp"
+#include "ReverbNode.h"
+#include "PlainReverbNode.h"
 
 
 using namespace dinahmoe;
@@ -21,7 +23,6 @@ struct Synth {
     RefCounted<AudioBufferSourceNode> vco = context->createAudioBufferSourceNode(playbackSpeed);
     // set the buffer
     vco->setBuffer(mNoteBuffer);
-    
     // create a filter
     RefCounted<BiquadFilterNode> vcf = context->createBiquadFilterNode
       (DspBasics::BiquadFilterType::LOWPASS, filterFrequency, 3, 1.0F);
@@ -29,13 +30,18 @@ struct Synth {
     // *** Set the properties ***
     // connect VCO to VCF
     vco->connect(vcf.get());
-    // connect VCF the main bus
-    vcf->connect(context->masterGainNode());
+    
+    // connect VCF to Reverb via the public input
+    vcf->connect(rvb->m_input.get());
+    
+    // connect Reverb the main bus
+    rvb->m_output->connect(context->masterGainNode());
     
     // *** Call noteOn  ***
     vco->noteOn(context->getCurrentTime() + 0.1);
   }
   
+  ReverbNode* rvb;
   InMemoryBuffer* mNoteBuffer;
 };
 
