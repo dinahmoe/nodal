@@ -19,19 +19,19 @@ ReverbNode::ReverbNode(AudioContext* context){
   m_allPass = new AllpassNode*[2];
 
   
-  m_gains[0] = context->createGainNode(1);
-  m_gains[1] = context->createGainNode(0.9);
-  m_gains[2] = context->createGainNode(0.8);
-  m_gains[3] = context->createGainNode(0.7);
+  m_gains[0] = context->createGainNode(0.9);
+  m_gains[1] = context->createGainNode(0.8);
+  m_gains[2] = context->createGainNode(0.7);
+  m_gains[3] = context->createGainNode(0.6);
 
   float samplerate = context->getSampleRate();
-  m_plain[0] = new PlainReverbNode(context,0.02,0.75);
-  m_plain[1] = new PlainReverbNode(context,0.03,0.75);
-  m_plain[2] = new PlainReverbNode(context,0.04,0.75);
-  m_plain[3] = new PlainReverbNode(context,0.05,0.75);
+  m_plain[0] = new PlainReverbNode(context,0.02,0.65);
+  m_plain[1] = new PlainReverbNode(context,0.03,0.65);
+  m_plain[2] = new PlainReverbNode(context,0.04,0.65);
+  m_plain[3] = new PlainReverbNode(context,0.05,0.65);
 
-  m_allPass[0] = new AllpassNode(context,0.02,0.75);
-  m_allPass[1] = new AllpassNode(context,0.03,0.75);
+  m_allPass[0] = new AllpassNode(context,0.02,0.65);
+  m_allPass[1] = new AllpassNode(context,0.03,0.65);
   
   m_input = context->createGainNode();
   m_output = context->createGainNode();
@@ -57,5 +57,8 @@ ReverbNode::ReverbNode(AudioContext* context){
   
 }
 
-ReverbNode::~ReverbNode(){}
+ReverbNode::~ReverbNode(){
+  delete [] m_allPass;
+  delete [] m_plain;
+}
 
