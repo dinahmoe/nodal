@@ -14,15 +14,14 @@
 #include "AllpassNode.h"
 #include "AudioContext.hpp"
 
-namespace dinahmoe {
-  namespace audioengine {
+using namespace dinahmoe;
+using namespace audioengine;
     
-    class ReverbNode : public AudioNode {
+class ReverbNode{
     public:
       ReverbNode(AudioContext* context);
       ~ReverbNode();
-      inline const char* getType() { return "ReverbNode"; }
-      void processInternal(int numSamples, int outputRequesting);
+
       RefCounted<AudioGainNode> m_input;
       RefCounted<AudioGainNode> m_output;
     private:
@@ -30,8 +29,6 @@ namespace dinahmoe {
       AllpassNode** m_allPass;
       RefCounted<AudioGainNode>* m_gains;
       RefCounted<SummingNode> m_sum;
-    };
-    
-  } // AUDIOENGINE
-} // DMAF
+};
+
 #endif /* defined(__Dmaf_OSC_Utilities__ReverbNode__) */

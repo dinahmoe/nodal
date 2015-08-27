@@ -14,15 +14,14 @@
 #include "DelayNode.hpp"
 #include "AudioContext.hpp"
 
-namespace dinahmoe {
-  namespace audioengine {
+using namespace dinahmoe;
+using namespace audioengine;
     
-    class PlainReverbNode : public AudioNode {
+  class PlainReverbNode{
     public:
       PlainReverbNode(AudioContext* context,float delay,float gain);
       ~PlainReverbNode();
-      inline const char* getType() { return "PlainReverbNode"; }
-      void processInternal(int numSamples, int outputRequesting);
+
       RefCounted<AudioGainNode> m_input;
       RefCounted<AudioGainNode> m_output;
     private:
@@ -30,8 +29,5 @@ namespace dinahmoe {
       RefCounted<DelayNode> m_delay;
       RefCounted<SummingNode> m_sum;
     };
-    
-  } // AUDIOENGINE
-} // DMAF
 
 #endif /* defined(__Nodal__PlainReverbNode__) */
