@@ -25,33 +25,39 @@
  *
  */
 //
-//  AllpassNode.h
+//  StereoPannerNode.h
 //  Nodal
 //
-//  Created by Thoren Horstmann on 26.08.15.
+//  Created by Thoren Horstmann on 02.09.15.
 //
 //
 
-#ifndef __Nodal__AllpassNode__
-#define __Nodal__AllpassNode__
+#ifndef __Nodal__StereoPannerNode__
+#define __Nodal__StereoPannerNode__
 
-#include "AudioContext.hpp"
-#include <array>
+#include "AudioNode.hpp"
 
-using namespace dinahmoe;
-using namespace audioengine;
+namespace dinahmoe {
+  namespace audioengine {
+  
+    enum PanningModel {
+      EQUALPOWER,
+      HRFT
+    };
+    class StereoPannerNode : public AudioNode {
+    public:
+      StereoPannerNode(AudioContext* context, float pan = 0.F);
+      ~StereoPannerNode();
+      void setPanningModel(PanningModel pModel);
+      inline const char* getType() { return "StereoPannerNode"; }
+      void processInternal(int numSamples, int outputRequesting);
+    private:
+      PanningModel m_pModel;
+      
+      float computeX(float pan, bool isMono);
+    };
+    
+  } // audioengine
+} // dinahmoe
 
-class AllpassNode {
-public:
-  AllpassNode(AudioContext* context,float delay,float gain);
-  ~AllpassNode();
-  RefCounted<AudioGainNode> m_input;
-  RefCounted<AudioGainNode> m_output;
-private:
-  AudioContext* m_context;
-  std::array<RefCounted<AudioGainNode>,2> m_gains;
-  RefCounted<DelayNode> m_delay;
-  std::array<RefCounted<AudioGainNode>,2> m_sums;
-};
-
-#endif /* defined(__Nodal__AllpassNode__) */
+#endif /* defined(__Nodal__StereoPannerNode__) */
