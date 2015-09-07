@@ -30,7 +30,7 @@ class ofApp : public ofBaseApp{
   
   AudioContext* mAudioContext;
   Synth mSynth;
-  ofSpherePrimitive m_middle;
+  ofBoxPrimitive m_outerBox;
   ofBoxPrimitive m_Box;
   float m_BoxX;
   float m_BoxY;

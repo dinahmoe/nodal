@@ -150,7 +150,6 @@ namespace dinahmoe {
         x = computeX(azimuth, isMono);
         assert(x <= 90 && x >= -90);
         distanceGain = computeDistanceAndConeGain();
-        std::cout << distanceGain << std::endl;
         gainL = cosf(x * M_PI / 2);
         gainR = sinf(x * M_PI / 2);
 

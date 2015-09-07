@@ -24,19 +24,43 @@ void ofApp::setup(){
   mSynth.rvb = new ReverbNode(mAudioContext);
   mSynth.init(mAudioContext);
   m_Box.set(50);
-  m_BoxX = (float)ofGetWidth() / 2;
-  m_BoxY = (float)ofGetHeight() / 2;
+  m_BoxX = 0;
+  m_BoxY = 0;
   m_BoxZ = 0;
   m_moveLeft = true;
   m_moveUp = true;
   m_moveBack = true;
   i = 0;
-  m_listenerPosition = ofEasyCam();
+  m_outerBox.set(500);
+  m_outerBox.setPosition(m_BoxX, m_BoxY, m_BoxZ);
   m_listenerPosition.setPosition(m_BoxX, m_BoxY, m_BoxZ);
+  ofVec3f op = m_outerBox.getPosition();
+  ofVec3f size = m_outerBox.getSize();
+  m_BoxX = 100;
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
+  
+  if(m_BoxX <= -250){
+    m_moveLeft = false;
+  }
+  if(m_BoxX >= 250){
+    m_moveLeft = true;
+  }
+  if(m_BoxY <= -250){
+    m_moveUp = false;
+  }
+  if(m_BoxY >= 250){
+    m_moveUp = true;
+  }
+  if(m_BoxZ <= -250){
+    m_moveBack = true;
+  }
+  if(m_BoxZ >= 250){
+    m_moveBack = false;
+  }
+  
   if(m_moveLeft){
     --m_BoxX;
   }else{
@@ -52,34 +76,17 @@ void ofApp::update(){
   }else{
     --m_BoxZ;
   }
-  if(m_BoxX <= 0){
-    m_moveLeft = false;
-  }
-  if(m_BoxX >= ofGetWidth()){
-    m_moveLeft = true;
-  }
-  if(m_BoxY <= 0){
-    m_moveUp = false;
-  }
-  if(m_BoxY >= ofGetHeight()){
-    m_moveUp = true;
-  }
-  if(m_BoxZ <= 0){
-    m_moveBack = true;
-  }
-  if(m_BoxZ >= 100){
-    m_moveBack = false;
-  }
   ofVec3f camPos = m_listenerPosition.getPosition();
-  ofVec3f camO = m_listenerPosition.getOrientationEuler();
   ofVec3f camof = m_listenerPosition.getLookAtDir();
-  mSynth.setListener(camPos[0],camPos[1],camPos[2], camO[0], camO[1], camO[2], camof[0], camof[1], camof[2]);
+  ofVec3f camUp = m_listenerPosition.getUpDir();
+  
+  mSynth.setListener(camPos[0],camPos[1],camPos[2], camof[0], camof[1], camof[2] , camUp[0], camUp[1], camUp[2]);
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
   m_listenerPosition.begin();
-
+  m_outerBox.drawWireframe();
   m_Box.setPosition(m_BoxX, m_BoxY, m_BoxZ);
   m_Box.draw();
   
