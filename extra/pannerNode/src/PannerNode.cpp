@@ -35,16 +35,18 @@
 #include "PannerNode.h"
 #include "AudioNode.hpp"
 #include "AudioNodeInput.hpp"
+#include <iostream>
 
 namespace dinahmoe {
   namespace audioengine {
     
-    PannerNode::PannerNode(AudioContext* context, float x, float y, float z) :
+    PannerNode::PannerNode(AudioContext* context, AudioListener* listener, float x, float y, float z) :
     AudioNode(context),
     m_pModel(EQUALPOWER),
-    m_dModel(INVERSE),
+    m_dModel(LINEAR),
+    m_Listener(listener),
     m_refDistance(1),
-    m_maxDistance(10000),
+    m_maxDistance(1000),
     m_rolloffFactor(1),
     m_coneInnerAngle(360),
     m_coneOuterAngle(360),
@@ -80,7 +82,7 @@ namespace dinahmoe {
     void PannerNode::setDistanceModel(DistanceModelType dModel){
       m_dModel = dModel;
     }
-    void PannerNode::setListener(AudioListener listener){
+    void PannerNode::setListener(AudioListener* listener){
       m_Listener = listener;
     }
     
@@ -129,10 +131,12 @@ namespace dinahmoe {
         setPosition(xValue,yValue,zValue);
         computeAzimuthElevationDistance(&azimuth,&elevation, &distance);
         x = computeX(azimuth, isMono);
+        assert(x <= 90 && x >= -90);
         distanceGain = computeDistanceGain(distance);
-        
+        std::cout << distanceGain << std::endl;
         gainL = cosf(x * M_PI / 2);
         gainR = sinf(x * M_PI / 2);
+
       }
       for(int currentSample = 0; currentSample < numSamples; ++currentSample){
         if(isInput1SampleAccurateX){
@@ -146,24 +150,25 @@ namespace dinahmoe {
 
           gainL = cosf(x * M_PI / 2);
           gainR = sinf(x * M_PI / 2);
+
         }
         if(isMono){
-          out->data[0][currentSample] = in->data[0][currentSample] * distanceGain * gainL;
-          out->data[1][currentSample] = in->data[0][currentSample] * distanceGain * gainR;
+          out->data[0][currentSample] = (in->data[0][currentSample] * gainL) * distanceGain;
+          out->data[1][currentSample] = (in->data[0][currentSample] * gainR) * distanceGain;
         } else {
           if(azimuth <= 0){
-            out->data[0][currentSample] = in->data[0][currentSample] + in->data[1][currentSample] * distanceGain * gainL;
-            out->data[1][currentSample] = in->data[1][currentSample] * distanceGain * gainR;
+            out->data[0][currentSample] = (in->data[0][currentSample] + in->data[1][currentSample] * gainL) * distanceGain;
+            out->data[1][currentSample] = (in->data[1][currentSample] * gainR) * distanceGain;
           } else {
-            out->data[0][currentSample] = in->data[0][currentSample] * distanceGain * gainL;
-            out->data[1][currentSample] = in->data[1][currentSample] + in->data[0][currentSample] * distanceGain * gainR;
+            out->data[0][currentSample] = (in->data[0][currentSample] * gainL) * distanceGain;
+            out->data[1][currentSample] = (in->data[1][currentSample] + in->data[0][currentSample] * gainR) *distanceGain;
           }
         }
       }
       
     }
     void PannerNode::computeAzimuthElevationDistance(float* azimuth, float* elevation, float* distance){
-      Vec3<float> sourceListener = m_Position - m_Listener.m_Position;
+      Vec3<float> sourceListener = m_Position - m_Listener->m_Position;
       *distance = sqrt(sourceListener.dot(sourceListener));
       if(sourceListener.isZero()){
         *azimuth = 0;
@@ -172,8 +177,8 @@ namespace dinahmoe {
       }
       sourceListener.normalize();
       // Align axes.
-      Vec3<float> listenerFront = m_Listener.m_OrientationFront;
-      Vec3<float> listenerUp = m_Listener.m_OrientationUp;
+      Vec3<float> listenerFront = m_Listener->m_OrientationFront;
+      Vec3<float> listenerUp = m_Listener->m_OrientationUp;
       Vec3<float> listenerRight = listenerFront.cross(listenerUp);
       listenerRight.normalize();
       
@@ -210,12 +215,18 @@ namespace dinahmoe {
     float PannerNode::computeDistanceGain(float distance){
       switch (m_dModel) {
         case LINEAR:
-          return 1 - m_rolloffFactor * ((distance - m_refDistance) / (m_maxDistance - m_refDistance));
+          distance =  1 - m_rolloffFactor * ((distance - m_refDistance) / (m_maxDistance - m_refDistance));
+          break;
         case INVERSE:
-          return m_refDistance / (m_refDistance + m_rolloffFactor * (distance - m_refDistance));
+          distance = m_refDistance / (m_refDistance + m_rolloffFactor * (distance - m_refDistance));
+          break;
         case EXPONENTIAL:
-          return pow((distance / m_refDistance), -m_rolloffFactor);
+          distance = pow((distance / m_refDistance), -m_rolloffFactor);
+          break;
       }
+      distance = fmax(0,distance);
+      distance = fmin(1,distance);
+      return distance;
     }
     float PannerNode::computeX(float azimuth, bool isMono){
       azimuth = fmax(-180,azimuth);

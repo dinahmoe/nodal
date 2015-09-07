@@ -51,11 +51,11 @@ namespace dinahmoe {
     
     class PannerNode : public AudioNode {
     public:
-      PannerNode(AudioContext* context, float x = 0.F, float y = 0.F, float z = 0.F);
+      PannerNode(AudioContext* context,AudioListener* listener, float x = 0.F, float y = 0.F, float z = 0.F);
       ~PannerNode();
       void setPanningModel(PanningModel pModel);
       void setDistanceModel(DistanceModelType dModel);
-      void setListener(AudioListener listener);
+      void setListener(AudioListener* listener);
       void setPosition(float x = 0, float y = 0, float z = 0);
       void setOrientation(float x = 1, float y = 0, float z = 0);
       void setVelocity(float x = 0, float y = 0, float z = 0);
@@ -65,7 +65,7 @@ namespace dinahmoe {
     private:
       PanningModel m_pModel;
       DistanceModelType m_dModel;
-      AudioListener m_Listener;
+      AudioListener* m_Listener;
       float m_refDistance;
       float m_maxDistance;
       float m_rolloffFactor;

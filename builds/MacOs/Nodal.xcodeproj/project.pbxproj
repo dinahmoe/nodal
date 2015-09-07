@@ -124,7 +124,6 @@
 		8FA53360F9954FA9AADD0193 /* AudioInputNode.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = AudioInputNode.cpp; path = "dm-audioengine/src/AudioInputNode.cpp"; sourceTree = SOURCE_ROOT; };
 		91462508C4DB4E6283BE65AA /* ChannelMergerNode.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ChannelMergerNode.cpp; path = "dm-audioengine/src/ChannelMergerNode.cpp"; sourceTree = SOURCE_ROOT; };
 		965A1D213A1842F8A1A71214 /* LogMac.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = LogMac.mm; path = "dm-log/src/apple/LogMac.mm"; sourceTree = SOURCE_ROOT; };
-		96A316CC1B999AE100D0847B /* AudioListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioListener.h; path = "dm-audioengine/include/AudioListener.h"; sourceTree = "<group>"; };
 		9D0EA5E94DF74E2595D116D2 /* DynamicsCompressorNode.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = DynamicsCompressorNode.cpp; path = "dm-audioengine/src/DynamicsCompressorNode.cpp"; sourceTree = SOURCE_ROOT; };
 		A1F08D3827194BC78BBB6EAA /* libdm-audiomidi.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libdm-audiomidi.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5973BCD82EA4EBA9763FE63 /* DmExceptions.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = DmExceptions.hpp; path = "dm-utils/include/DmExceptions.hpp"; sourceTree = SOURCE_ROOT; };
@@ -247,7 +246,6 @@
 		872AD31C41234619B22201BB /* Header Files */ = {
 			isa = PBXGroup;
 			children = (
-				96A316CC1B999AE100D0847B /* AudioListener.h */,
 				477EAA867AF648FB97CA714A /* AudioContext.hpp */,
 				453B45282E7C48FBAE841421 /* AudioEngine.hpp */,
 				14B5C027699E4359B57CEC40 /* AudioFileReader.hpp */,

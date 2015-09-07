@@ -79,9 +79,11 @@ public:
   }
   void normalize(){
     T magnitude = sqrt(m_x * m_x + m_y * m_y + m_z * m_z);
-    m_x /= magnitude;
-    m_y /= magnitude;
-    m_z /= magnitude;
+    if(magnitude != 0){
+      m_x /= magnitude;
+      m_y /= magnitude;
+      m_z /= magnitude;
+    }
   }
 
 private:

@@ -29,7 +29,10 @@ void ofApp::setup(){
   m_BoxZ = 0;
   m_moveLeft = true;
   m_moveUp = true;
+  m_moveBack = true;
   i = 0;
+  m_listenerPosition = ofEasyCam();
+  m_listenerPosition.setPosition(m_BoxX, m_BoxY, m_BoxZ);
 }
 
 //--------------------------------------------------------------
@@ -44,6 +47,11 @@ void ofApp::update(){
   }else{
     ++m_BoxY;
   }
+  if(m_moveBack){
+    ++m_BoxZ;
+  }else{
+    --m_BoxZ;
+  }
   if(m_BoxX <= 0){
     m_moveLeft = false;
   }
@@ -56,10 +64,22 @@ void ofApp::update(){
   if(m_BoxY >= ofGetHeight()){
     m_moveUp = true;
   }
+  if(m_BoxZ <= 0){
+    m_moveBack = true;
+  }
+  if(m_BoxZ >= 100){
+    m_moveBack = false;
+  }
+  ofVec3f camPos = m_listenerPosition.getPosition();
+  ofVec3f camO = m_listenerPosition.getOrientationEuler();
+  ofVec3f camof = m_listenerPosition.getLookAtDir();
+  mSynth.setListener(camPos[0],camPos[1],camPos[2], camO[0], camO[1], camO[2], camof[0], camof[1], camof[2]);
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+  m_listenerPosition.begin();
+
   m_Box.setPosition(m_BoxX, m_BoxY, m_BoxZ);
   m_Box.draw();
   
@@ -75,9 +95,11 @@ void ofApp::draw(){
     float filterFrequency = ofMap((float)(ofGetHeight() - m_BoxY) / (float)ofGetHeight(), .0F, 1.F, 20.F, 20000.F);
     
     // BAAM :)
-    mSynth.playNote(mAudioContext, playbackSpeed, filterFrequency,nx,ny,m_BoxX);
+
+    mSynth.playNote(mAudioContext, playbackSpeed, filterFrequency,m_BoxX,m_BoxY,m_BoxZ);
   }
   ++i;
+  m_listenerPosition.end();
 }
 
 //--------------------------------------------------------------
@@ -102,7 +124,7 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-  float nx = (float)m_BoxX / (float)ofGetWidth();
+  /*float nx = (float)m_BoxX / (float)ofGetWidth();
   float ny = (float)m_BoxY / (float)ofGetHeight();
   nx = (nx * 2) - 1;
   ny = (ny * 2) - 1;
@@ -114,8 +136,8 @@ void ofApp::mousePressed(int x, int y, int button){
   float pan = ofMap((float)x / (float)ofGetWidth(), .0F, 1.F, -1.F, 1.F);
 
   // BAAM :)
-  std::cout << "x " << nx << " y " << ny << std::endl;
-  mSynth.playNote(mAudioContext, playbackSpeed, filterFrequency,nx,ny,0);
+  //std::cout << "x " << nx << " y " << ny << std::endl;
+  mSynth.playNote(mAudioContext, playbackSpeed, filterFrequency,nx,ny,0);*/
 }
 
 //--------------------------------------------------------------

@@ -30,13 +30,17 @@ class ofApp : public ofBaseApp{
   
   AudioContext* mAudioContext;
   Synth mSynth;
+  ofSpherePrimitive m_middle;
   ofBoxPrimitive m_Box;
   float m_BoxX;
   float m_BoxY;
   float m_BoxZ;
   bool m_moveLeft;
   bool m_moveUp;
+  bool m_moveBack;
   int i;
+  
+  ofEasyCam m_listenerPosition;
 
 
   float** m_tempOutputBuffer;
