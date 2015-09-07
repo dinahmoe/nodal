@@ -59,6 +59,12 @@ namespace dinahmoe {
       void setPosition(float x = 0, float y = 0, float z = 0);
       void setOrientation(float x = 1, float y = 0, float z = 0);
       void setVelocity(float x = 0, float y = 0, float z = 0);
+      void setRefDistance(float refDistance = 1);
+      void setMaxDistance(float maxDistance = 10000);
+      void setRollOffFactor(float rollOffFactor = 1);
+      void setConeInnerAngle(float coneInnerAngle = 360);
+      void setConeOuterAngle(float coneOuterAngle = 360);
+      void setConeOuterGain(float coneOuterGain = 0);
 
       inline const char* getType() { return "PannerNode"; }
       void processInternal(int numSamples, int outputRequesting);
@@ -76,9 +82,9 @@ namespace dinahmoe {
       Vec3<float> m_Orientation;
       Vec3<float> m_Velocity;
       
-      void computeAzimuthElevationDistance(float* azimuth, float* elevation, float* distance);
+      void computeAzimuthElevationDistance(float* azimuth, float* elevation);
       float computeX(float azimuth, bool isMono);
-      float computeDistanceGain(float distance);
+      float computeDistanceAndConeGain();
     };
     
   } // audioengine

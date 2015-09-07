@@ -85,6 +85,24 @@ namespace dinahmoe {
     void PannerNode::setListener(AudioListener* listener){
       m_Listener = listener;
     }
+    void PannerNode::setRefDistance(float refDistance){
+      m_refDistance = refDistance;
+    }
+    void PannerNode::setMaxDistance(float maxDistance){
+      m_maxDistance = maxDistance;
+    }
+    void PannerNode::setRollOffFactor(float rollOffFactor){
+      m_rolloffFactor = rollOffFactor;
+    }
+    void PannerNode::setConeInnerAngle(float coneInnerAngle){
+      m_coneInnerAngle = fmod(coneInnerAngle,360);
+    }
+    void PannerNode::setConeOuterAngle(float coneOuterAngle){
+      m_coneOuterAngle = fmod(coneOuterAngle,360);
+    }
+    void PannerNode::setConeOuterGain(float coneOuterGain){
+      m_coneOuterGain = coneOuterGain;
+    }
     
     void PannerNode::processInternal(int numSamples, int outputRequesting) {
       bool isInput1SampleAccurateX = m_inputs[1]->isSampleAccurate();
@@ -104,7 +122,6 @@ namespace dinahmoe {
       float zValue;
       float azimuth;
       float elevation;
-      float distance;
       float distanceGain;
       const AudioBuffer* in = m_inputBuffers[0];
       if (in->isSilent) {
@@ -129,10 +146,10 @@ namespace dinahmoe {
         yValue = m_inputs[2]->getValue();
         zValue = m_inputs[3]->getValue();
         setPosition(xValue,yValue,zValue);
-        computeAzimuthElevationDistance(&azimuth,&elevation, &distance);
+        computeAzimuthElevationDistance(&azimuth,&elevation);
         x = computeX(azimuth, isMono);
         assert(x <= 90 && x >= -90);
-        distanceGain = computeDistanceGain(distance);
+        distanceGain = computeDistanceAndConeGain();
         std::cout << distanceGain << std::endl;
         gainL = cosf(x * M_PI / 2);
         gainR = sinf(x * M_PI / 2);
@@ -144,9 +161,9 @@ namespace dinahmoe {
           yValue = yData[currentSample];
           zValue = zData[currentSample];
           setPosition(xValue,yValue,zValue);
-          computeAzimuthElevationDistance(&azimuth,&elevation, &distance);
+          computeAzimuthElevationDistance(&azimuth,&elevation);
           x = computeX(azimuth, isMono);
-          distanceGain = computeDistanceGain(distance);
+          distanceGain = computeDistanceAndConeGain();
 
           gainL = cosf(x * M_PI / 2);
           gainR = sinf(x * M_PI / 2);
@@ -167,9 +184,8 @@ namespace dinahmoe {
       }
       
     }
-    void PannerNode::computeAzimuthElevationDistance(float* azimuth, float* elevation, float* distance){
+    void PannerNode::computeAzimuthElevationDistance(float* azimuth, float* elevation){
       Vec3<float> sourceListener = m_Position - m_Listener->m_Position;
-      *distance = sqrt(sourceListener.dot(sourceListener));
       if(sourceListener.isZero()){
         *azimuth = 0;
         *elevation = 0;
@@ -212,7 +228,10 @@ namespace dinahmoe {
       else if (*elevation < -90)
         *elevation = -180 - *elevation;
     }
-    float PannerNode::computeDistanceGain(float distance){
+    float PannerNode::computeDistanceAndConeGain(){
+      Vec3<float> sourceToListener = m_Listener->m_Position - m_Position;
+      float distance = sqrt(sourceToListener.dot(sourceToListener));
+
       switch (m_dModel) {
         case LINEAR:
           distance =  1 - m_rolloffFactor * ((distance - m_refDistance) / (m_maxDistance - m_refDistance));
@@ -226,8 +245,41 @@ namespace dinahmoe {
       }
       distance = fmax(0,distance);
       distance = fmin(1,distance);
-      return distance;
+      if (m_Orientation.isZero() || ((m_coneInnerAngle == 0) && (m_coneOuterAngle == 0)))
+        return distance; // no cone specified - unity gain
+      
+      // Normalized source-listener vector
+      sourceToListener.normalize();
+      
+      Vec3<float> normalizedSourceOrientation = m_Orientation;
+      normalizedSourceOrientation.normalize();
+      
+      // Angle between the source orientation vector and the source-listener vector
+      float dotProduct = sourceToListener.dot(normalizedSourceOrientation);
+      float angle = 180 * acos(dotProduct) / M_PI;
+      float absAngle = fabs(angle);
+      
+      // Divide by 2 here since API is entire angle (not half-angle)
+      float absInnerAngle = fabs(m_coneInnerAngle) / 2;
+      float absOuterAngle = fabs(m_coneOuterAngle) / 2;
+      float gain = 1;
+      
+      if (absAngle <= absInnerAngle)
+        // No attenuation
+        gain = 1;
+      else if (absAngle >= absOuterAngle)
+        // Max attenuation
+        gain = m_coneOuterGain;
+      else {
+        // Between inner and outer cones
+        // inner -> outer, x goes from 0 -> 1
+        float x = (absAngle - absInnerAngle) / (absOuterAngle - absInnerAngle);
+        gain = (1 - x) + m_coneOuterGain * x;
+      }
+      
+      return distance * gain;
     }
+    
     float PannerNode::computeX(float azimuth, bool isMono){
       azimuth = fmax(-180,azimuth);
       azimuth = fmin(180,azimuth);
