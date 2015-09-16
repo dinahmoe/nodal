@@ -21,6 +21,8 @@
 		802D70B46D394A2F8797585A /* ChannelSplitterNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8C0AE23FFEC2419AA014CFE9 /* ChannelSplitterNode.cpp */; settings = {COMPILER_FLAGS = ""; }; };
 		90B8742B9D40494C847DCB67 /* StringUtilitiesMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = FF43A40AFD2341F1B2E756F7 /* StringUtilitiesMac.mm */; settings = {COMPILER_FLAGS = ""; }; };
 		928B592D64B14281AB691250 /* ChannelMergerNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91462508C4DB4E6283BE65AA /* ChannelMergerNode.cpp */; settings = {COMPILER_FLAGS = ""; }; };
+		96FAABB81BA96184006F4927 /* PannerNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 96FAABB61BA96184006F4927 /* PannerNode.cpp */; };
+		96FAABB91BA96184006F4927 /* StereoPannerNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 96FAABB71BA96184006F4927 /* StereoPannerNode.cpp */; };
 		A141D45747834CFBB5FC73C2 /* OscillatorNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 14E37F1383D34492B22293EC /* OscillatorNode.cpp */; settings = {COMPILER_FLAGS = ""; }; };
 		AA3FBC37B2E246C693C3A9EA /* AudioNodeOutput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5677B38EE2EA42B6AC58E17E /* AudioNodeOutput.cpp */; settings = {COMPILER_FLAGS = ""; }; };
 		AD9E5E867443467ABC3EDDA9 /* WaveShaperNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 730A77764CA44D5F84339AE6 /* WaveShaperNode.cpp */; settings = {COMPILER_FLAGS = ""; }; };
@@ -124,6 +126,11 @@
 		8FA53360F9954FA9AADD0193 /* AudioInputNode.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = AudioInputNode.cpp; path = "dm-audioengine/src/AudioInputNode.cpp"; sourceTree = SOURCE_ROOT; };
 		91462508C4DB4E6283BE65AA /* ChannelMergerNode.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ChannelMergerNode.cpp; path = "dm-audioengine/src/ChannelMergerNode.cpp"; sourceTree = SOURCE_ROOT; };
 		965A1D213A1842F8A1A71214 /* LogMac.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = LogMac.mm; path = "dm-log/src/apple/LogMac.mm"; sourceTree = SOURCE_ROOT; };
+		96FAABB31BA96166006F4927 /* PannerNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PannerNode.h; path = "dm-audioengine/include/PannerNode.h"; sourceTree = "<group>"; };
+		96FAABB41BA96166006F4927 /* StereoPannerNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StereoPannerNode.h; path = "dm-audioengine/include/StereoPannerNode.h"; sourceTree = "<group>"; };
+		96FAABB51BA96174006F4927 /* AudioListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioListener.h; path = "dm-audioengine/include/AudioListener.h"; sourceTree = "<group>"; };
+		96FAABB61BA96184006F4927 /* PannerNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PannerNode.cpp; path = "dm-audioengine/src/PannerNode.cpp"; sourceTree = "<group>"; };
+		96FAABB71BA96184006F4927 /* StereoPannerNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StereoPannerNode.cpp; path = "dm-audioengine/src/StereoPannerNode.cpp"; sourceTree = "<group>"; };
 		9D0EA5E94DF74E2595D116D2 /* DynamicsCompressorNode.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = DynamicsCompressorNode.cpp; path = "dm-audioengine/src/DynamicsCompressorNode.cpp"; sourceTree = SOURCE_ROOT; };
 		A1F08D3827194BC78BBB6EAA /* libdm-audiomidi.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libdm-audiomidi.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5973BCD82EA4EBA9763FE63 /* DmExceptions.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = DmExceptions.hpp; path = "dm-utils/include/DmExceptions.hpp"; sourceTree = SOURCE_ROOT; };
@@ -251,6 +258,9 @@
 				14B5C027699E4359B57CEC40 /* AudioFileReader.hpp */,
 				23F630B0563D4E0FBC790CEE /* AudioNodeOutput.hpp */,
 				BD6C76CA2AA246569F97E820 /* ControlTimeline.hpp */,
+				96FAABB31BA96166006F4927 /* PannerNode.h */,
+				96FAABB41BA96166006F4927 /* StereoPannerNode.h */,
+				96FAABB51BA96174006F4927 /* AudioListener.h */,
 			);
 			name = "Header Files";
 			sourceTree = "<group>";
@@ -373,6 +383,8 @@
 				14E37F1383D34492B22293EC /* OscillatorNode.cpp */,
 				17C22E081E1F422BB439E415 /* SummingNode.cpp */,
 				730A77764CA44D5F84339AE6 /* WaveShaperNode.cpp */,
+				96FAABB61BA96184006F4927 /* PannerNode.cpp */,
+				96FAABB71BA96184006F4927 /* StereoPannerNode.cpp */,
 			);
 			name = "Source Files";
 			sourceTree = "<group>";
@@ -550,11 +562,13 @@
 				DF6A18A94B514BD1A0EEBA86 /* AudioInputNode.cpp in Sources */,
 				C9C0B00DBE1B4DEC98F3BE40 /* AudioNode.cpp in Sources */,
 				6A74AF45E9D54E11925DBAB8 /* AudioNodeInput.cpp in Sources */,
+				96FAABB81BA96184006F4927 /* PannerNode.cpp in Sources */,
 				AA3FBC37B2E246C693C3A9EA /* AudioNodeOutput.cpp in Sources */,
 				062DEF0440024C1D8A0F3CF4 /* BiquadFilterNode.cpp in Sources */,
 				928B592D64B14281AB691250 /* ChannelMergerNode.cpp in Sources */,
 				802D70B46D394A2F8797585A /* ChannelSplitterNode.cpp in Sources */,
 				E95C7132FF0C43B19F186653 /* ControlTimeline.cpp in Sources */,
+				96FAABB91BA96184006F4927 /* StereoPannerNode.cpp in Sources */,
 				5F706601FBE1446AA8786B20 /* DelayNode.cpp in Sources */,
 				C4E8FAB8D2E747B1BC76B01A /* DynamicsCompressorNode.cpp in Sources */,
 				E0CD5C9AE0204E1EA79372A8 /* InMemoryBuffer.cpp in Sources */,
