@@ -21,8 +21,8 @@ void ofApp::setup(){
   // create a buffer from file. Note that this throws std::runtime_error
   // in case of errors
   mSynth.mNoteBuffer = mAudioContext->createInMemoryBuffer(ofToDataPath("sounds/SynthNote.aif"));
-  mSynth.rvb = new ReverbNode(mAudioContext);
   mSynth.init(mAudioContext);
+  mSynth.panner->setMaxDistance(1000);
   m_Box.set(50);
   m_BoxX = 0;
   m_BoxY = 0;
@@ -31,7 +31,8 @@ void ofApp::setup(){
   m_moveUp = true;
   m_moveBack = true;
   i = 0;
-  m_outerBox.set(500);
+  //m_outerBox.set(500);
+  m_outerBox.set(1000, 500, 500);
   m_outerBox.setPosition(m_BoxX, m_BoxY, m_BoxZ);
   m_listenerPosition.setPosition(m_BoxX, m_BoxY, m_BoxZ);
   ofVec3f op = m_outerBox.getPosition();
@@ -42,10 +43,10 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
   
-  if(m_BoxX <= -250){
+  if(m_BoxX <= -500){
     m_moveLeft = false;
   }
-  if(m_BoxX >= 250){
+  if(m_BoxX >= 500){
     m_moveLeft = true;
   }
   if(m_BoxY <= -250){
@@ -86,24 +87,14 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
   m_listenerPosition.begin();
+  
   m_outerBox.drawWireframe();
   m_Box.setPosition(m_BoxX, m_BoxY, m_BoxZ);
   m_Box.draw();
-  
+
   if(i == 10){
     i = 0;
-    float nx = (float)m_BoxX / (float)ofGetWidth();
-    float ny = (float)m_BoxY / (float)ofGetHeight();
-    nx = (nx * 2) - 1;
-    ny = (ny * 2) - 1;
-    // the playback speed of the sample is between 0.5 and 2
-    float playbackSpeed = ofMap((float)m_BoxX / (float)ofGetWidth(), .0F, 1.F, 0.5, 2);
-    // the filter frequency 0.1 and 0.5
-    float filterFrequency = ofMap((float)(ofGetHeight() - m_BoxY) / (float)ofGetHeight(), .0F, 1.F, 20.F, 20000.F);
-    
-    // BAAM :)
-
-    mSynth.playNote(mAudioContext, playbackSpeed, filterFrequency,m_BoxX,m_BoxY,m_BoxZ);
+    mSynth.playNote(mAudioContext,m_BoxX,m_BoxY,m_BoxZ);
   }
   ++i;
   m_listenerPosition.end();
@@ -131,20 +122,7 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-  /*float nx = (float)m_BoxX / (float)ofGetWidth();
-  float ny = (float)m_BoxY / (float)ofGetHeight();
-  nx = (nx * 2) - 1;
-  ny = (ny * 2) - 1;
-  // the playback speed of the sample is between 0.5 and 2
-  float playbackSpeed = ofMap((float)x / (float)ofGetWidth(), .0F, 1.F, 0.5, 2);
-  // the filter frequency 0.1 and 0.5
-  float filterFrequency = ofMap((float)(ofGetHeight() - y) / (float)ofGetHeight(), .0F, 1.F, 20.F, 20000.F);
-  
-  float pan = ofMap((float)x / (float)ofGetWidth(), .0F, 1.F, -1.F, 1.F);
 
-  // BAAM :)
-  //std::cout << "x " << nx << " y " << ny << std::endl;
-  mSynth.playNote(mAudioContext, playbackSpeed, filterFrequency,nx,ny,0);*/
 }
 
 //--------------------------------------------------------------
