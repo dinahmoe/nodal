@@ -1,1 +1,0 @@
-const char * dummy = "/Users/work/Documents/Development/nodal/builds/MacOs/nodal_dummy.c";
